@@ -21,20 +21,36 @@ struct Placement {
     getObject()->~T();
   }
 
-  T* operator->() const {
+  const T* operator->() const {
     return getObject();
   }
 
-  T& operator*() const {
+  T* operator->() {
+    return getObject();
+  }
+
+  const T& operator*() const {
     return getRef();
   }
 
-  T* getObject() const {
-    return (T*) &u;
+  T& operator*() {
+    return getRef();
   }
 
-  T& getRef() const {
-    return (T&) u;
+  const T* getObject() const {
+    return static_cast<const T*>(static_cast<const void*>(&u));
+  }
+
+  T* getObject() {
+    return static_cast<T*>(static_cast<void*>(&u));
+  }
+
+  const T& getRef() const {
+    return *getObject();
+  }
+
+  T& getRef() {
+    return *getObject();
   }
 
   void destroy() {
@@ -43,23 +59,12 @@ struct Placement {
 
 private:
   void assignBy(const T& rhs) {
-    T* p = (T*) alloc();
+    auto p = static_cast<T*>(alloc());
     *p = rhs;
   }
 
 private:
-  union {
-    char c;
-    short s;
-    int i;
-    long l;
-    long long ll;
-    float f;
-    double d;
-    void* p;
-
-    char buff[sizeof(T)];
-  } u;
+  typename std::aligned_storage<sizeof(T), alignof(T)>::type u;
 };
 
 template<typename T>
