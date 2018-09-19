@@ -1,32 +1,25 @@
 #ifndef H49422F70_25E4_4BC5_B62E_49094085B51D
 #define H49422F70_25E4_4BC5_B62E_49094085B51D
 
-//#include <array>
-//#include <functional>
+#include <utility>
 #include <initializer_list>
-#include <new>
-//#include <string>
-//#include <tuple>
-//#include <type_traits>
-//#include <utility>
-//#include <vector>
 
 #include <cub/base/inplace.h>
 #include <cub/mem/Placement.h>
 
 CUB_NS_BEGIN
 
-struct nullopt_t {
-  explicit nullopt_t() = default;
+struct NilOptional {
+  explicit constexpr NilOptional(int) {}
 };
 
-extern const nullopt_t nullopt;
+extern const NilOptional NIL_OPTIONAL;
 
 template<typename T>
 struct Optional {
   Optional() {}
 
-  Optional(nullopt_t) {}
+  Optional(NilOptional) {}
 
   Optional(const Optional& src) {
     if (src) {
@@ -63,7 +56,7 @@ struct Optional {
     clear();
   }
 
-  Optional& operator=(nullopt_t) {
+  Optional& operator=(NilOptional) {
     clear();
     return *this;
   }
@@ -225,7 +218,7 @@ private:
   Placement<T> storage;
 
   static_assert(
-      !std::is_same<nullopt_t, typename std::remove_cv<T>::type>::value,
+      !std::is_same<NilOptional, typename std::remove_cv<T>::type>::value,
       "Optional<nullopt_t> is not allowed.");
   static_assert(
       !std::is_same<inplace_t, typename std::remove_cv<T>::type>::value,
@@ -280,62 +273,62 @@ bool operator>=(const Optional<T>& lhs, const Optional<T>& rhs) {
 }
 
 template<typename T>
-bool operator==(const Optional<T>& lhs, nullopt_t rhs) {
+bool operator==(const Optional<T>& lhs, NilOptional rhs) {
   return !lhs;
 }
 
 template<typename T>
-bool operator==(nullopt_t lhs, const Optional<T>& rhs) {
+bool operator==(NilOptional lhs, const Optional<T>& rhs) {
   return !rhs;
 }
 
 template<typename T>
-bool operator!=(const Optional<T>& lhs, nullopt_t rhs) {
+bool operator!=(const Optional<T>& lhs, NilOptional rhs) {
   return static_cast<bool>(lhs);
 }
 
 template<typename T>
-bool operator!=(nullopt_t lhs, const Optional<T>& rhs) {
+bool operator!=(NilOptional lhs, const Optional<T>& rhs) {
   return static_cast<bool>(rhs);
 }
 
 template<typename T>
-bool operator<(const Optional<T>& lhs, nullopt_t rhs) {
+bool operator<(const Optional<T>& lhs, NilOptional rhs) {
   return false;
 }
 
 template<typename T>
-bool operator<(nullopt_t lhs, const Optional<T>& rhs) {
+bool operator<(NilOptional lhs, const Optional<T>& rhs) {
   return static_cast<bool>(rhs);
 }
 
 template<typename T>
-bool operator<=(const Optional<T>& lhs, nullopt_t rhs) {
+bool operator<=(const Optional<T>& lhs, NilOptional rhs) {
   return !lhs;
 }
 
 template<typename T>
-bool operator<=(nullopt_t lhs, const Optional<T>& rhs) {
+bool operator<=(NilOptional lhs, const Optional<T>& rhs) {
   return true;
 }
 
 template<typename T>
-bool operator>(const Optional<T>& lhs, nullopt_t rhs) {
+bool operator>(const Optional<T>& lhs, NilOptional rhs) {
   return static_cast<bool>(lhs);
 }
 
 template<typename T>
-bool operator>(nullopt_t lhs, const Optional<T>& rhs) {
+bool operator>(NilOptional lhs, const Optional<T>& rhs) {
   return false;
 }
 
 template<typename T>
-bool operator>=(const Optional<T>& lhs, nullopt_t rhs) {
+bool operator>=(const Optional<T>& lhs, NilOptional rhs) {
   return true;
 }
 
 template<typename T>
-bool operator>=(nullopt_t lhs, const Optional<T>& rhs) {
+bool operator>=(NilOptional lhs, const Optional<T>& rhs) {
   return !rhs;
 }
 

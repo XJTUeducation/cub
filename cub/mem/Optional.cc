@@ -2,6 +2,6 @@
 
 CUB_NS_BEGIN
 
-extern const nullopt_t nullopt{};
+extern const NilOptional NIL_OPTIONAL{{}};
 
 CUB_NS_END
