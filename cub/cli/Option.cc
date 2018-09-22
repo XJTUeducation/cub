@@ -16,7 +16,7 @@ namespace {
     }
 
   private:
-    StringView help() const override {
+    const std::string& help() const override {
       return usage;
     }
 
@@ -78,7 +78,7 @@ Option* option(const char* name, float* dst, const std::string& usage) {
 }
 
 Option* option(const char* name, bool* dst, const std::string& usage) {
-  return OPTION(int, (saver<bool, int>(dst, "%d%c")));
+  return OPTION(bool, (saver<bool, int>(dst, "%d%c")));
 }
 
 Option* option(const char* name, std::string* dst, const std::string& usage) {
