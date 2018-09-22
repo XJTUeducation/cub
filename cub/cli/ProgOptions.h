@@ -10,15 +10,8 @@ struct ProgOptions {
   ProgOptions(std::vector<Option*>&& options);
   ~ProgOptions();
 
-  bool parse(int* argc, char** argv);
+  bool parse(int argc, const char** argv);
   void usage(const std::string& prog, std::string&) const;
-
-  template <typename F>
-  void foreach(F f) const {
-    for(auto option : options) {
-      f(option);
-    }
-  }
 
 private:
   std::vector<Option*> options;

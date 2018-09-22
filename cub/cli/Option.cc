@@ -4,6 +4,7 @@
 #include "cub/string/Scanner.h"
 #include <stdio.h>
 #include <functional>
+#include <iostream>
 
 CUB_NS_BEGIN
 
@@ -39,8 +40,7 @@ namespace {
   Saver saver(T* dst, const char* format) {
     return [dst, format](StringView value) {
       Parsed parsed;
-      char extra;
-      if (sscanf(value.data(), format, &parsed, &extra) == 1) {
+      if (sscanf(value.data(), format, &parsed) == 1) {
         *dst = parsed;
         return true;
       }
@@ -56,32 +56,32 @@ namespace {
   template <>
   std::string format(std::string* t) {
     using namespace std::string_literals;
-    return "\""s += *t += "\""s;
+    return "\""s + *t + "\""s;
   }
 
   std::string help(const char* name, const char* type,
-      const std::string& init, const std::string& usage) {
+      std::string&& init, const char* usage) {
     auto flag = stringprintf("--%s=%s", name, init.c_str());
-    return stringprintf("\t%-33s\t%s\t%s\n", flag.c_str(), type, usage.c_str());
+    return stringprintf("  %-20s  %-12s  %s\n", flag.c_str(), type, usage);
   }
 }
 
 #define OPTION(type, saver) \
   new OptionImpl(name, saver, help(name, #type, format(dst), usage))
 
-Option* option(const char* name, int* dst, const std::string& usage) {
-  return OPTION(int, saver(dst, "%d%c"));
+Option* option(const char* name, int* dst, const char* usage) {
+  return OPTION(int, saver(dst, "%d"));
 }
 
-Option* option(const char* name, float* dst, const std::string& usage) {
-  return OPTION(float, saver(dst, "%f%c"));
+Option* option(const char* name, float* dst, const char* usage) {
+  return OPTION(float, saver(dst, "%f"));
 }
 
-Option* option(const char* name, bool* dst, const std::string& usage) {
-  return OPTION(bool, (saver<bool, int>(dst, "%d%c")));
+Option* option(const char* name, bool* dst, const char* usage) {
+  return OPTION(bool, (saver<bool, int>(dst, "%d")));
 }
 
-Option* option(const char* name, std::string* dst, const std::string& usage) {
+Option* option(const char* name, std::string* dst, const char* usage) {
   Saver saver = [dst](StringView value) {
     *dst = std::string(value);
     return true;

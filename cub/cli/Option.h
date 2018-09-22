@@ -11,10 +11,10 @@ DEF_INTERFACE(Option) {
   virtual const std::string& help() const = 0;
 };
 
-Option* option(const char* name, int* dst, const std::string& usage);
-Option* option(const char* name, float* dst, const std::string& usage);
-Option* option(const char* name, bool* dst, const std::string& usage);
-Option* option(const char* name, std::string* dst, const std::string& usage);
+Option* option(const char* name, int* dst, const char* usage);
+Option* option(const char* name, float* dst, const char* usage);
+Option* option(const char* name, bool* dst, const char* usage);
+Option* option(const char* name, std::string* dst, const char* usage);
 
 CUB_NS_END
 
