@@ -36,10 +36,6 @@ namespace {
 
     void operator delete(void* p) {
       if (p != 0) {
-        if (alloc_blocks == 0) {
-          throw std::exception();
-        }
-
         alloc_blocks--;
         ::free(p);
       }
