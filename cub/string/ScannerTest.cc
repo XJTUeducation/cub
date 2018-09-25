@@ -231,7 +231,7 @@ FIXTURE(ScannerTest) {
   }
 
   TEST("AllCharClasses") {
-    ASSERT_EQ(256, matches(all()).size());
+    ASSERT_EQ(256, matches(always()).size());
     ASSERT_EQ("0123456789"s, matches(digit()));
     ASSERT_EQ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"s,
         matches(alpha()));

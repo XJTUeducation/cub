@@ -12,7 +12,7 @@ namespace {
   }
 }
 
-CharSpec all() {
+CharSpec always() {
   return expect<true>();
 }
 
@@ -61,12 +61,11 @@ DEF_CH_SPEC(escaped, '\\')
 
 namespace {
   template<bool expected>
-  CharSpec expect(std::vector<CharSpec>&& specs) {
-    return [specs = std::move(specs)](char c) {
-      for (auto spec : specs) {
-        if (spec(c) == expected) {
+  CharSpec shortcut(std::vector<CharSpec>&& specs) {
+    return [specs](char c) {
+      for (auto& spec : specs) {
+        if (spec(c) == expected)
           return expected;
-        }
       }
       return !expected;
     };
@@ -74,11 +73,11 @@ namespace {
 }
 
 CharSpec is_and(std::vector<CharSpec>&& specs) {
-  return expect<false>(std::move(specs));
+  return shortcut<false>(std::move(specs));
 }
 
 CharSpec is_or(std::vector<CharSpec>&& specs) {
-  return expect<true>(std::move(specs));
+  return shortcut<true>(std::move(specs));
 }
 
 CharSpec is_not(CharSpec spec) {

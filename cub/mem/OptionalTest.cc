@@ -73,7 +73,7 @@ TEST("DefaultConstructor") {
 }
 
 TEST("NullOptConstructor") {
-  Optional<int> empty(NIL_OPTIONAL);
+  Optional<int> empty(nilopt);
   ASSERT_FALSE(empty);
 }
 
@@ -182,7 +182,7 @@ TEST("AssignmentVarious") {
   opt = 42;
   ASSERT_TRUE(opt);
   ASSERT_EQ(42, opt.value());
-  opt = NIL_OPTIONAL;
+  opt = nilopt;
   ASSERT_FALSE(opt);
   opt = 42;
   ASSERT_TRUE(opt);
@@ -295,18 +295,18 @@ TEST("Comparisons") {
   // RHS: nullopt, be, b2, 3, b4
 
   // OptionalTest_Comparisons_EXPECT_NOT_TO_WORK(nullopt,nullopt);
-  OptionalTest_Comparisons_EXPECT_SAME(NIL_OPTIONAL, be);
-  OptionalTest_Comparisons_EXPECT_LESS(NIL_OPTIONAL, b2);
+  OptionalTest_Comparisons_EXPECT_SAME(nilopt, be);
+  OptionalTest_Comparisons_EXPECT_LESS(nilopt, b2);
   // OptionalTest_Comparisons_EXPECT_NOT_TO_WORK(nullopt,3);
-  OptionalTest_Comparisons_EXPECT_LESS(NIL_OPTIONAL, b4);
+  OptionalTest_Comparisons_EXPECT_LESS(nilopt, b4);
 
-  OptionalTest_Comparisons_EXPECT_SAME(ae, NIL_OPTIONAL);
+  OptionalTest_Comparisons_EXPECT_SAME(ae, nilopt);
   OptionalTest_Comparisons_EXPECT_SAME(ae, be);
   OptionalTest_Comparisons_EXPECT_LESS(ae, b2);
   OptionalTest_Comparisons_EXPECT_LESS(ae, 3);
   OptionalTest_Comparisons_EXPECT_LESS(ae, b4);
 
-  OptionalTest_Comparisons_EXPECT_GREATER(a2, NIL_OPTIONAL);
+  OptionalTest_Comparisons_EXPECT_GREATER(a2, nilopt);
   OptionalTest_Comparisons_EXPECT_GREATER(a2, be);
   OptionalTest_Comparisons_EXPECT_SAME(a2, b2);
   OptionalTest_Comparisons_EXPECT_LESS(a2, 3);
@@ -318,7 +318,7 @@ TEST("Comparisons") {
   OptionalTest_Comparisons_EXPECT_SAME(3, 3);
   OptionalTest_Comparisons_EXPECT_LESS(3, b4);
 
-  OptionalTest_Comparisons_EXPECT_GREATER(a4, NIL_OPTIONAL);
+  OptionalTest_Comparisons_EXPECT_GREATER(a4, nilopt);
   OptionalTest_Comparisons_EXPECT_GREATER(a4, be);
   OptionalTest_Comparisons_EXPECT_GREATER(a4, b2);
   OptionalTest_Comparisons_EXPECT_GREATER(a4, 3);
@@ -356,7 +356,7 @@ TEST("BigstringLeakCheck") {
   using OS = Optional<std::string>;
 
   OS a;
-  OS b = NIL_OPTIONAL;
+  OS b = nilopt;
   OS c = std::string(n, 'c');
   std::string sd(n, 'd');
   OS d = sd;
@@ -371,7 +371,7 @@ TEST("BigstringLeakCheck") {
   OS ce(e);
 
   OS oa;
-  OS ob = NIL_OPTIONAL;
+  OS ob = nilopt;
   OS oc = std::string(n, 'c');
   std::string sod(n, 'd');
   OS od = sod;
@@ -387,7 +387,7 @@ TEST("BigstringLeakCheck") {
   OS mf(std::move(of));
 
   OS aa1;
-  OS ab1 = NIL_OPTIONAL;
+  OS ab1 = nilopt;
   OS ac1 = std::string(n, 'c');
   std::string sad1(n, 'd');
   OS ad1 = sad1;
@@ -396,7 +396,7 @@ TEST("BigstringLeakCheck") {
   af1.emplace(n, 'f');
 
   OS aa2;
-  OS ab2 = NIL_OPTIONAL;
+  OS ab2 = nilopt;
   OS ac2 = std::string(n, 'c');
   std::string sad2(n, 'd');
   OS ad2 = sad2;
@@ -412,7 +412,7 @@ TEST("BigstringLeakCheck") {
   af1 = aa2;
 
   OS aa3;
-  OS ab3 = NIL_OPTIONAL;
+  OS ab3 = nilopt;
   OS ac3 = std::string(n, 'c');
   std::string sad3(n, 'd');
   OS ad3 = sad3;
@@ -420,15 +420,15 @@ TEST("BigstringLeakCheck") {
   OS af3;
   af3.emplace(n, 'f');
 
-  aa3 = NIL_OPTIONAL;
-  ab3 = NIL_OPTIONAL;
-  ac3 = NIL_OPTIONAL;
-  ad3 = NIL_OPTIONAL;
-  ae3 = NIL_OPTIONAL;
-  af3 = NIL_OPTIONAL;
+  aa3 = nilopt;
+  ab3 = nilopt;
+  ac3 = nilopt;
+  ad3 = nilopt;
+  ae3 = nilopt;
+  af3 = nilopt;
 
   OS aa4;
-  OS ab4 = NIL_OPTIONAL;
+  OS ab4 = nilopt;
   OS ac4 = std::string(n, 'c');
   std::string sad4(n, 'd');
   OS ad4 = sad4;
@@ -444,7 +444,7 @@ TEST("BigstringLeakCheck") {
   af4 = OS(inplace, n, 'f');
 
   OS aa5;
-  OS ab5 = NIL_OPTIONAL;
+  OS ab5 = nilopt;
   OS ac5 = std::string(n, 'c');
   std::string sad5(n, 'd');
   OS ad5 = sad5;
@@ -467,7 +467,7 @@ TEST("BigstringLeakCheck") {
   af5 = saf5;
 
   OS aa6;
-  OS ab6 = NIL_OPTIONAL;
+  OS ab6 = nilopt;
   OS ac6 = std::string(n, 'c');
   std::string sad6(n, 'd');
   OS ad6 = sad6;
@@ -483,7 +483,7 @@ TEST("BigstringLeakCheck") {
   af6 = std::string(n, 'f');
 
   OS aa7;
-  OS ab7 = NIL_OPTIONAL;
+  OS ab7 = nilopt;
   OS ac7 = std::string(n, 'c');
   std::string sad7(n, 'd');
   OS ad7 = sad7;

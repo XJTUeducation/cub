@@ -46,6 +46,10 @@ char StringView::operator[](size_t n) const {
   return data_[n];
 }
 
+std::string StringView::to_s() const {
+  return std::string(*this);
+}
+
 StringView::operator std::string() const {
   return data() ? std::string(data(), size()) : std::string();
 }

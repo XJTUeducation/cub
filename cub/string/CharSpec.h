@@ -9,7 +9,7 @@ CUB_NS_BEGIN
 
 using CharSpec = std::function<bool(char)>;
 
-CharSpec all();
+CharSpec always();
 CharSpec never();
 
 using CType = int(*)(int);

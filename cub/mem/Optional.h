@@ -13,7 +13,7 @@ struct NilOptional {
   explicit constexpr NilOptional(int) {}
 };
 
-extern const NilOptional NIL_OPTIONAL;
+extern const NilOptional nilopt;
 
 template<typename T>
 struct Optional {

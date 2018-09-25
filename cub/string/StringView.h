@@ -39,6 +39,8 @@ struct StringView {
   size_t rfind(char c, size_t pos = npos) const;
 
   StringView substr(size_t pos, size_t n = npos) const;
+
+  std::string to_s() const;
   explicit operator std::string() const;
 
   bool contains(StringView substr) const;

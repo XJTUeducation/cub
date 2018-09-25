@@ -2,6 +2,6 @@
 
 CUB_NS_BEGIN
 
-extern const NilOptional NIL_OPTIONAL{{}};
+extern const NilOptional nilopt{{}};
 
 CUB_NS_END
