@@ -57,6 +57,7 @@ DEF_CH_SPEC(minus, '-')
 DEF_CH_SPEC(zero, '0')
 DEF_CH_SPEC(slash, '/')
 DEF_CH_SPEC(underscore, '_')
+DEF_CH_SPEC(escaped, '\\')
 
 namespace {
   template<bool expected>

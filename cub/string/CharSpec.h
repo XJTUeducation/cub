@@ -42,6 +42,7 @@ DECL_ATOM_SPEC(minus);
 DECL_ATOM_SPEC(zero);
 DECL_ATOM_SPEC(slash);
 DECL_ATOM_SPEC(underscore);
+DECL_ATOM_SPEC(escaped);
 
 #undef DECL_ATOM_SPEC
 

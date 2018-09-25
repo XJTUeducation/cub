@@ -114,7 +114,7 @@ FIXTURE(ScannerTest) {
   TEST("ScanUntil") {
     ASSERT_TRUE(Scanner(R"(' \1 \2 \3 \' \\'rest)")
         .literal("'")
-        .until('\'')
+        .until(ch('\''))
         .literal("'")
         .result(&remain, &match));
     ASSERT_EQ(R"( \\'rest)"s, remain);
@@ -124,36 +124,18 @@ FIXTURE(ScannerTest) {
     remain = match = "unset";
     ASSERT_FALSE(Scanner(R"(' \1 \2 \3 \\rest)")
         .literal("'")
-        .until('\'')
+        .until(ch('\''))
         .result(&remain, &match));
     ASSERT_EQ("unset"s, remain);
     ASSERT_EQ("unset"s, match);
 
     // Scan until an escape character.
     remain = match = "";
-    ASSERT_TRUE(
-        Scanner(R"(123\456)").until('\\').result(&remain, &match));
+    ASSERT_TRUE(Scanner(R"(123\456)")
+        .until(ch('\\'))
+        .result(&remain, &match));
     ASSERT_EQ(R"(\456)"s, remain);
     ASSERT_EQ("123"s, match);
-  }
-
-  TEST("ScanEscapedUntil") {
-    ASSERT_TRUE(Scanner(R"(' \1 \2 \3 \' \\'rest)")
-        .literal("'")
-        .escapedUntil('\'')
-        .literal("'")
-        .result(&remain, &match));
-    ASSERT_EQ("rest"s, remain);
-    ASSERT_EQ(R"(' \1 \2 \3 \' \\')"s, match);
-
-    // The "scan until" character is not present.
-    remain = match = "unset";
-    ASSERT_FALSE(Scanner(R"(' \1 \2 \3 \' \\rest)")
-        .literal("'")
-        .escapedUntil('\'')
-        .result(&remain, &match));
-    ASSERT_EQ("unset"s, remain);
-    ASSERT_EQ("unset"s, match);
   }
 
   TEST("ZeroOrOneLiteral") {

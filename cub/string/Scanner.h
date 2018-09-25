@@ -15,28 +15,26 @@ struct Scanner {
   Scanner& literal(StringView);
   Scanner& any(CharSpec);
   Scanner& many(CharSpec);
+  Scanner& until(CharSpec);
 
   Scanner& restartCapture();
   Scanner& stopCapture();
-
   Scanner& eos();
-
-  Scanner& until(char);
-  Scanner& escapedUntil(char);
 
   char peek(char = '\0') const;
   int empty() const;
-  bool result(StringView* remaining = nullptr, StringView* capture = nullptr);
+
+  bool result(StringView* remain = nullptr, StringView* capture = nullptr);
 
 private:
   void untilImpl(char end_ch, bool escaped);
-  Scanner& error();
+  Scanner& onError();
 
 private:
   StringView cur;
   const char* start = nullptr;
   const char* end = nullptr;
-  bool error_ = false;
+  bool error = false;
 };
 
 CUB_NS_END
