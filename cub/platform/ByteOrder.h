@@ -5,7 +5,7 @@
 
 CUB_NS_BEGIN
 
-// GCC on Linux
+// GCC on Linux only.
 
 constexpr bool isLittleEndian() {
   return __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__;
