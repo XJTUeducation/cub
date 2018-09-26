@@ -59,25 +59,28 @@ DEF_CH_SPEC(slash, '/')
 DEF_CH_SPEC(underscore, '_')
 DEF_CH_SPEC(escaped, '\\')
 
-namespace {
-  template<bool expected>
-  CharSpec shortcut(std::vector<CharSpec>&& specs) {
-    return [specs](char c) {
-      for (auto& spec : specs) {
-        if (spec(c) == expected)
-          return expected;
-      }
-      return !expected;
-    };
+namespace internal {
+  namespace {
+    template<bool expected>
+    CharSpec shortcut(const std::vector<CharSpec>& specs) {
+      return [specs](char c) {
+        for (auto& spec : specs) {
+          if (spec(c) == expected)
+            return expected;
+        }
+        return !expected;
+      };
+    }
   }
-}
 
-CharSpec is_and(std::vector<CharSpec>&& specs) {
-  return shortcut<false>(std::move(specs));
-}
+  CharSpec is_and_impl(const std::vector<CharSpec>& specs) {
+    return shortcut<false>(specs);
+  }
 
-CharSpec is_or(std::vector<CharSpec>&& specs) {
-  return shortcut<true>(std::move(specs));
+  CharSpec is_or_impl(const std::vector<CharSpec>& specs) {
+    return shortcut<true>(specs);
+  }
+
 }
 
 CharSpec is_not(CharSpec spec) {

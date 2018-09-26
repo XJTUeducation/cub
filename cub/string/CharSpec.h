@@ -17,8 +17,21 @@ using CType = int(*)(int);
 CharSpec atom(CType);
 CharSpec ch(char c);
 
-CharSpec is_and(std::vector<CharSpec>&&);
-CharSpec is_or(std::vector<CharSpec>&&);
+namespace internal {
+  CharSpec is_and_impl(const std::vector<CharSpec>&);
+  CharSpec is_or_impl(const std::vector<CharSpec>&);
+}
+
+template <typename... T>
+CharSpec is_and(const T&... specs) {
+  return internal::is_and_impl({specs...});
+}
+
+template <typename... T>
+CharSpec is_or(const T&... specs) {
+  return internal::is_or_impl({specs...});
+}
+
 CharSpec is_not(CharSpec);
 
 #define DECL_ATOM_SPEC(name) CharSpec name()

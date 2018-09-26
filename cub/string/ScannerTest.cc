@@ -54,7 +54,7 @@ FIXTURE(ScannerTest) {
 
   TEST("AnyEscapedNewline") {
     ASSERT_TRUE(Scanner("\\\n")
-        .any(is_or({alpha(), digit(), underscore()}))
+        .any(is_or(alpha(), digit(), underscore()))
         .result(&remain, &match));
     ASSERT_EQ("\\\n"s, remain);
     ASSERT_EQ(""s, match);
@@ -62,7 +62,7 @@ FIXTURE(ScannerTest) {
 
   TEST("AnyEmptyString") {
     ASSERT_TRUE(Scanner("")
-        .any(is_or({alpha(), digit(), underscore()}))
+        .any(is_or(alpha(), digit(), underscore()))
         .result(&remain, &match));
     ASSERT_EQ(""s, remain);
     ASSERT_EQ(""s, match);
@@ -166,7 +166,7 @@ FIXTURE(ScannerTest) {
     ASSERT_TRUE(scan.any(space())
         .restartCapture()
         .one(alpha())
-        .any(is_or({alpha(), digit()}))
+        .any(is_or(alpha(), digit()))
         .stopCapture()
         .any(space())
         .result(&remain, &match));
@@ -241,39 +241,39 @@ FIXTURE(ScannerTest) {
     ASSERT_EQ(
         "-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_"
         "abcdefghijklmnopqrstuvwxyz"s,
-        matches(is_or({alnum(), dash(), underscore()})));
+        matches(is_or(alnum(), dash(), underscore())));
 
     ASSERT_EQ(
         "-./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz"s,
-        matches(is_or({alnum(), dash(), dot(), slash()})));
+        matches(is_or(alnum(), dash(), dot(), slash())));
 
     ASSERT_EQ(
         "-./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_"
         "abcdefghijklmnopqrstuvwxyz"s,
-        matches(is_or({alnum(), dash(), dot(), slash(), underscore()})));
+        matches(is_or(alnum(), dash(), dot(), slash(), underscore())));
 
     ASSERT_EQ(".0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"s,
-              matches(is_or({alnum(), dot()})));
+              matches(is_or(alnum(), dot())));
 
     ASSERT_EQ("+-.0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"s,
-              matches(is_or({alnum(), dot(), plus(), minus()})));
+              matches(is_or(alnum(), dot(), plus(), minus())));
 
     ASSERT_EQ(".0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz"s,
-              matches(is_or({alnum(), dot(), underscore()})));
+              matches(is_or(alnum(), dot(), underscore())));
 
     ASSERT_EQ("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz"s,
-              matches(is_or({alnum(), underscore()})));
+              matches(is_or(alnum(), underscore())));
 
     ASSERT_EQ("abcdefghijklmnopqrstuvwxyz"s, matches(lower()));
 
     ASSERT_EQ("0123456789abcdefghijklmnopqrstuvwxyz"s,
-              matches(is_or({lower(), digit()})));
+              matches(is_or(lower(), digit())));
 
     ASSERT_EQ("0123456789_abcdefghijklmnopqrstuvwxyz"s,
-              matches(is_or({lower(), digit(), underscore()})));
+              matches(is_or(lower(), digit(), underscore())));
 
-    ASSERT_EQ("123456789"s, matches(is_and({digit(), is_not(ch('0'))})));
+    ASSERT_EQ("123456789"s, matches(is_and(digit(), is_not(ch('0')))));
     ASSERT_EQ("\t\n\v\f\r "s, matches(space()));
     ASSERT_EQ("ABCDEFGHIJKLMNOPQRSTUVWXYZ"s, matches(upper()));
   }
@@ -284,7 +284,7 @@ FIXTURE(ScannerTest) {
     ASSERT_EQ('\0', Scanner("").peek());
     ASSERT_EQ('z', Scanner("").peek('z'));
     ASSERT_EQ('A', Scanner("0123A").any(digit()).peek());
-    ASSERT_EQ('\0', Scanner("0123A").any(is_or({alpha(), digit()})).peek());
+    ASSERT_EQ('\0', Scanner("0123A").any(is_or(alpha(), digit())).peek());
   }
 
   std::string matches(CharSpec spec) {

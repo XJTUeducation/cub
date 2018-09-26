@@ -30,6 +30,9 @@ struct StringView {
   size_t size() const;
   char operator[](size_t n) const;
 
+  char front() const;
+  char back() const;
+
   iterator begin() const;
   iterator end() const;
 

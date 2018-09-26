@@ -42,6 +42,14 @@ StringView::iterator StringView::end() const {
   return data_ + size_;
 }
 
+char StringView::front() const {
+  return data_[0];
+}
+
+char StringView::back() const {
+  return data_[size_-1];
+}
+
 char StringView::operator[](size_t n) const {
   return data_[n];
 }

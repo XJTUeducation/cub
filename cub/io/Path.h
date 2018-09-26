@@ -1,15 +1,45 @@
 #ifndef H67177F30_1107_45A0_A764_8E764C4693D7
 #define H67177F30_1107_45A0_A764_8E764C4693D7
 
-#include <string>
+#include "cub/string/StringView.h"
+#include <initializer_list>
+
+CUB_NS_BEGIN
 
 struct Path {
-  explicit Path(const std::string& path);
+  Path(StringView path);
 
-  Path& join(const std::string&);
+  bool isRelative() const;
+  bool isAbsolute() const;
+
+  // URI = dirName + baseName
+  // baseName = fileName + extName
+  StringView fullPath() const;
+  StringView dirName() const;
+  StringView baseName() const;
+  StringView fileName() const;
+  StringView extName() const;
+
+  Path& join(StringView rhs);
+
+private:
+  std::string normalize(StringView rhs) const;
 
 private:
   std::string path;
 };
+
+namespace internal {
+  void joinPaths(std::initializer_list<StringView> paths, Path& result);
+}
+
+template <typename... T>
+std::string paths(const T&... args) {
+  Path result("");
+  internal::joinPaths({args...}, result);
+  return std::string(result.fullPath());
+}
+
+CUB_NS_END
 
 #endif

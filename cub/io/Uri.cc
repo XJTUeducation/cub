@@ -7,7 +7,7 @@ namespace {
   bool parseScheme(StringView& remain, StringView& scheme) {
     return Scanner(remain)
         .one(alpha())
-        .many(is_or({alnum(), dot()}))
+        .many(is_or(alnum(), dot()))
         .stopCapture()
         .literal("://")
         .result(&remain, &scheme);
